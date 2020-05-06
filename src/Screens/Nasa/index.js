@@ -92,7 +92,10 @@ export default class Asteroid extends Component {
     return(
         <View>
             <ListItem>
-    <Text style={{textAlign:'center'}}>{item.id}</Text>
+                <Left/>
+                <Body>    <Text style={{textAlign:'center'}}>{item.id}</Text>
+</Body>
+<Right/>
 </ListItem> 
             </View>
     )

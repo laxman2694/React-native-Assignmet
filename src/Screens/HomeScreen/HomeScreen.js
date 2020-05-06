@@ -29,36 +29,21 @@ class HomeScreen extends React.Component {
 
   fetchCountryDetails = async data => {
     this.setState({loader: true});
-      
+    try {
+      let response = await axios.get(
+        `https://restcountries.eu/rest/v2/name/${data}`,
+      );
 
-      await fetch("https://restcountries.eu/rest/v2/name/"+data)
-      .then((resp)=> 
-      resp.json())
-      .then((response)=> {
-        alert(JSON.stringify(response.data))
-        if (response.length > 0) {
-          // alert(JSON.stringify(response.data))
-           this.props.navigation.navigate('Details', {
-             details: response.data,
-           });
-         } else {
-          this.setState({textInput: '', loader: false},this.showIssue());
-          
-         }
-      })
-      .catch((error)=>{
-        alert("error"+error.message);
-        this.setState({textInput: '', loader: false});
-      });
-
-      // let response = await axios.get(
-      //   `https://restcountries.eu/rest/v2/name/${data}`,
-      // );
-
-
-
-  
-
+      if (response.data && response.data.length > 0) {
+        this.props.navigation.navigate('Details', {
+          details: response.data,
+        });
+      } else {
+        throw Error('No Records to display');
+      }
+    } catch (e) {
+      this.showIssue();
+    }
     this.setState({textInput: '', loader: false});
   };
 
