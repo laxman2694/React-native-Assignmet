@@ -12,7 +12,7 @@ const deviceHeight = height;
 export default class HeaderTitleExample extends Component {
     constructor(props) {
         super(props);
-       Splashscreen.hide();
+        Splashscreen.hide();
         this.state = {
             isModalVisible: false,
             postsData: [],
@@ -26,12 +26,12 @@ export default class HeaderTitleExample extends Component {
         }
     }
     componentDidMount() {
-      //  alert(JSON.stringify(this.props));
-        
-      var that = this;
-      setInterval(function () {
-          that.setState({ isLoading: true, page: that.state.page + 1 }, that.getDataByPage);
-      }, 10000);
+        //  alert(JSON.stringify(this.props));
+
+        var that = this;
+        setInterval(function () {
+            that.setState({ isLoading: true, page: that.state.page + 1 }, that.getDataByPage);
+        }, 10000);
         AppState.addEventListener('change', this._handleAppStateChange);
         this.setState({ isLoading: true }, this.getDataByPage)
         //;
@@ -55,17 +55,19 @@ export default class HeaderTitleExample extends Component {
         fetch(url).then((response) => response.json())
             .then((responsejson) => {
                 this.setState({ postsData: [...this.state.postsData, ...responsejson.hits], isLoading: false })
+            }).catch((error) => {
+                alert('Something went wrong...');
             })
     }
-  
+
     renderRow = ({ item }) => {
         return (
             <View>
                 <View style={styles.card}>
-                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('JsonData',{post:item})} style={styles.cardContent}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('JsonData', { post: item })} style={styles.cardContent}>
                         <Text style={styles.postTxt}>Title: <Text style={{ fontSize: 16, color: '#060606', fontWeight: 'bold' }}>{item.title}</Text></Text>
-                        <Text style={[styles.postTxt,{marginVertical: 4}]  }> URL: <Text style={{ fontSize: 16, color: '#060606', fontWeight: 'bold' }}>{item.url}</Text></Text>
-                        <Text style={[styles.postTxt,{marginVertical: 4}]}>Created At: <Text style={{ fontSize: 16, color: '#060606', fontWeight: 'bold' }}>{item.created_at}</Text></Text>
+                        <Text style={[styles.postTxt, { marginVertical: 4 }]}> URL: <Text style={{ fontSize: 16, color: '#060606', fontWeight: 'bold' }}>{item.url}</Text></Text>
+                        <Text style={[styles.postTxt, { marginVertical: 4 }]}>Created At: <Text style={{ fontSize: 16, color: '#060606', fontWeight: 'bold' }}>{item.created_at}</Text></Text>
                         <Text style={styles.postTxt}>Author: <Text style={{ fontSize: 16, color: '#060606', fontWeight: 'bold' }}>{item.author}</Text></Text>
                     </TouchableOpacity>
                 </View>
@@ -114,10 +116,10 @@ export default class HeaderTitleExample extends Component {
                 this.state.postsData = [];
                 for (let i = 0; i < posts.length; i++) {
                     let str = posts[i].author.toLowerCase();
-                    let urlstr = posts[i].url===null ? "": posts[i].url.toLowerCase();
+                    let urlstr = posts[i].url === null ? "" : posts[i].url.toLowerCase();
                     //alert(urlstr);
                     //posts[i].url.toLowerCase() === text.toLowerCase() || urlstr.search(text.toLowerCase()) >= 0 ||
-                    if ( urlstr === text.toLowerCase() || urlstr.search(text.toLowerCase()) >= 0 || posts[i].author.toLowerCase() === text.toLowerCase() || str.search(text.toLowerCase()) >= 0) {
+                    if (urlstr === text.toLowerCase() || urlstr.search(text.toLowerCase()) >= 0 || posts[i].author.toLowerCase() === text.toLowerCase() || str.search(text.toLowerCase()) >= 0) {
                         tempPosts.push(posts[i]);
                         //let labeltxt = this.state.searchlabel === ''
                         this.setState({ postsData: [...tempPosts], searchlabel: 'CLEAR' });
@@ -130,12 +132,7 @@ export default class HeaderTitleExample extends Component {
 
     }
 
-    handleSearch = (text) => {
-        this.setState({ searchtxt: text });
-    }
-    toggleModal = () => {
-        this.setState({ isModalVisible: !this.state.isModalVisible });
-    };
+
 
     handleRefresh = () => {
         var that = this;
@@ -145,17 +142,17 @@ export default class HeaderTitleExample extends Component {
 
 
     }
-lazyLoad=()=>{
-    return(
-        <View style={{flex:1,position:'absolute',top: deviceHeight / 12,}}>
-        {
-                this.state.isLoading ? <View style={styles.loader}>
-                    <ActivityIndicator animating size='large' />
-                </View> : null
-         }
-        </View>
-    )
-}
+    lazyLoad = () => {
+        return (
+            <View style={{ flex: 1, position: 'absolute', top: deviceHeight / 12, }}>
+                {
+                    this.state.isLoading ? <View style={styles.loader}>
+                        <ActivityIndicator animating size='large' />
+                    </View> : null
+                }
+            </View>
+        )
+    }
 
     render() {
         return (
@@ -203,22 +200,26 @@ lazyLoad=()=>{
                                 selectionColor={"#777777"}
                             />
                         </View>
-                        <View style={{ flex: 1, height: 50, paddingVertical: 5,marginBottom:7,
-                         backgroundColor: '#4D4DFF', alignItems: 'center', 
-                         justifyContent: 'center', borderRadius: 8, elevation: 3 }}>
+                        <View style={{
+                            flex: 1, height: 50, paddingVertical: 5, marginBottom: 7,
+                            backgroundColor: '#4D4DFF', alignItems: 'center',
+                            justifyContent: 'center', borderRadius: 8, elevation: 3
+                        }}>
 
                             <TouchableOpacity style={[styles.buttonStyle]}
                                 onPress={() => this.searchPosts(this.state.postsData, this.state.searchtxt)}
                             >
-                                <Text style={[styles.textStyle, {marginTop:10}]}>{this.state.searchlabel}</Text>
+                                <Text style={[styles.textStyle, { marginTop: 10 }]}>{this.state.searchlabel}</Text>
                             </TouchableOpacity>
                         </View>
 
                     </View>
                     <View style={{ flex: 0.1 }} />
                     <View style={{ flex: 1.6, height: 50, alignItems: 'center', justifyContent: 'center' }}>
-                        <TouchableOpacity style={[styles.buttonStyle, { height: 40, 
-                        backgroundColor: '#4D4DFF', padding: 10 }]}
+                        <TouchableOpacity style={[styles.buttonStyle, {
+                            height: 40,
+                            backgroundColor: '#4D4DFF', padding: 10
+                        }]}
                             onPress={() => this.handleRefresh()}
                         >
                             <Text style={styles.textStyle}>{"  "}REFRESH{"  "}</Text>
@@ -227,11 +228,8 @@ lazyLoad=()=>{
 
                     <View style={{ flex: 0.4 }} />
                 </View>
-               {
-                  // this.lazyLoad()
-                   }
                 <View style={{ marginTop: deviceHeight / 5 }}>
-                  
+
                     <FlatList
                         style={styles.listContainer}
                         data={this.state.postsData}
@@ -285,17 +283,17 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#ffffff',
         textAlign: 'center',
-       
+
     },
 
     buttonStyle: {
         flex: 1,
         height: 40,
-       
+
         borderRadius: 5
     },
-    postTxt:{
-         fontSize: 16, color: '#4A4A4A' 
+    postTxt: {
+        fontSize: 16, color: '#4A4A4A'
     },
     card: {
         borderRadius: 8,
@@ -336,7 +334,9 @@ const styles = StyleSheet.create({
     },
     modal: {
         flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        justifyContent: 'center', 
+        alignItems: 'center',
         // height: 300 , 
         width: deviceWidth,
         // backgroundColor:'#efefef',  

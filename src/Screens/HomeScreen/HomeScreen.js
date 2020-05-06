@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, ActivityIndicator, StyleSheet,TextInput} from 'react-native';
+import {Text, View, ActivityIndicator, StyleSheet,TextInput,TouchableOpacity} from 'react-native';
 import {Item, Input, Button, Toast, Title,Container,Header,Left,Right,Body} from 'native-base';
 import axios from 'axios';
 
@@ -29,22 +29,35 @@ class HomeScreen extends React.Component {
 
   fetchCountryDetails = async data => {
     this.setState({loader: true});
-       try {
-      let response = await axios.get(
-        `https://restcountries.eu/rest/v2/name/${data}`,
-      );
+      
 
-      if (response.data && response.data.length > 0) {
-       // alert(JSON.stringify(response.data))
-        this.props.navigation.navigate('Details', {
-          details: response.data,
-        });
-      } else {
-        throw Error('No Records to display');
-      }
-    } catch (e) {
-      this.showIssue();
-    }
+      await fetch("https://restcountries.eu/rest/v2/name/"+data)
+      .then((resp)=> 
+      resp.json())
+      .then((response)=> {
+        alert(JSON.stringify(response.data))
+        if (response.length > 0) {
+          // alert(JSON.stringify(response.data))
+           this.props.navigation.navigate('Details', {
+             details: response.data,
+           });
+         } else {
+          this.setState({textInput: '', loader: false},this.showIssue());
+          
+         }
+      })
+      .catch((error)=>{
+        alert("error"+error.message);
+        this.setState({textInput: '', loader: false});
+      });
+
+      // let response = await axios.get(
+      //   `https://restcountries.eu/rest/v2/name/${data}`,
+      // );
+
+
+
+  
 
     this.setState({textInput: '', loader: false});
   };
@@ -92,7 +105,13 @@ class HomeScreen extends React.Component {
             style={styles.buttonStyle}>
             <Text style={styles.buttonText}>SUBMIT</Text>
           </Button>
+          
         </View>
+        <TouchableOpacity
+            onPress={()=>this.props.navigation.navigate('Posts')}
+       >
+            <Text style={styles.buttonText}>POSTS</Text>
+          </TouchableOpacity>
         {this.state.loader ? this.remderOverLayIndicator() : null}
       </View>
 

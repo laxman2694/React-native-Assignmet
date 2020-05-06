@@ -11,11 +11,9 @@ import Details from "./Screens/DetailsScreen";
 import Capital from "./Screens/CapitalInfoScreen/CapitalInfoScreen";
 const ModalNavigator = createStackNavigator(
   {
-    Posts:{screen: Posts},
    HomeScreen: {screen:HomeScreen},
   Details: {screen: Details},
   Capital: {screen:Capital},
-   Posts:{screen: Posts},
    PostList: {screen:PostList},
    JSONDetails: {screen:JSONDetails},
    Asteroid: {screen:Asteroid},

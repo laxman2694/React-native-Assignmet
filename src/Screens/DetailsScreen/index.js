@@ -14,7 +14,7 @@ const API_KEY = '05706f22f1fcba77ddaae967ffb18ead';
 
 const CustomListItem = ({item, onpress}) => {
   let {capital, population, latlng, flag, name} = item;
-  alert(flag)
+  //alert(flag)
   return (
     <ListItem>
       <Left style={styles.leftContainer}>
