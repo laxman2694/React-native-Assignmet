@@ -7,11 +7,14 @@ import PostList from './Screens/WooPosts/PostListing.js';
 import JSONDetails from './Screens/WooPosts/JsonDetails';
 import lazyloading from "./Screens/Posts/lazyloading";
 import HomeScreen  from "./Screens/HomeScreen/HomeScreen";
-import Details from "./Screens/DetailsScreen/DetailsScreen";
+import Details from "./Screens/DetailsScreen";
+import Capital from "./Screens/CapitalInfoScreen/CapitalInfoScreen";
 const ModalNavigator = createStackNavigator(
   {
-    HomeScreen: {screen:HomeScreen},
-    Details: {screen: Details},
+    Posts:{screen: Posts},
+   HomeScreen: {screen:HomeScreen},
+  Details: {screen: Details},
+  Capital: {screen:Capital},
    Posts:{screen: Posts},
    PostList: {screen:PostList},
    JSONDetails: {screen:JSONDetails},

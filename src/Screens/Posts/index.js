@@ -51,35 +51,22 @@ export default class HeaderTitleExample extends Component {
         this.setState({ appState: nextAppState });
     }
     getDataByPage = async () => {
-        //https://hn.algolia.com/api/v1/search_by_date?tags=story&page=1 responsejson.hits[0].title
-        //https://jsonplaceholder.typicode.com/photos?_limit=10&_page=
         const url = 'https://hn.algolia.com/api/v1/search_by_date?tags=story&page=' + this.state.page;
         fetch(url).then((response) => response.json())
             .then((responsejson) => {
                 this.setState({ postsData: [...this.state.postsData, ...responsejson.hits], isLoading: false })
             })
     }
-    settext(value) {
-
-        this.setState({ RadioSelectId: value, showcheckmark: true });
-
-    }
-    listRefresh = () => {
-        this.setState({ isLoading: true });
-        setTimeout(() => {
-            this.setState({ isLoading: false });
-        }, 1000).bind(this);
-
-    }
+  
     renderRow = ({ item }) => {
         return (
             <View>
                 <View style={styles.card}>
                     <TouchableOpacity onPress={()=>this.props.navigation.navigate('JsonData',{post:item})} style={styles.cardContent}>
-                        <Text style={{ fontSize: 16, color: '#4A4A4A' }}>Title: <Text style={{ fontSize: 16, color: '#060606', fontWeight: 'bold' }}>{item.title}</Text></Text>
-                        <Text style={{ fontSize: 16, color: '#4A4A4A', marginVertical: 4 }}> URL: <Text style={{ fontSize: 16, color: '#060606', fontWeight: 'bold' }}>{item.url}</Text></Text>
-                        <Text style={{ fontSize: 16, color: '#4A4A4A', marginBottom: 4 }}>Created At: <Text style={{ fontSize: 16, color: '#060606', fontWeight: 'bold' }}>{item.created_at}</Text></Text>
-                        <Text style={{ fontSize: 16, color: '#4A4A4A' }}>Author: <Text style={{ fontSize: 16, color: '#060606', fontWeight: 'bold' }}>{item.author}</Text></Text>
+                        <Text style={styles.postTxt}>Title: <Text style={{ fontSize: 16, color: '#060606', fontWeight: 'bold' }}>{item.title}</Text></Text>
+                        <Text style={[styles.postTxt,{marginVertical: 4}]  }> URL: <Text style={{ fontSize: 16, color: '#060606', fontWeight: 'bold' }}>{item.url}</Text></Text>
+                        <Text style={[styles.postTxt,{marginVertical: 4}]}>Created At: <Text style={{ fontSize: 16, color: '#060606', fontWeight: 'bold' }}>{item.created_at}</Text></Text>
+                        <Text style={styles.postTxt}>Author: <Text style={{ fontSize: 16, color: '#060606', fontWeight: 'bold' }}>{item.author}</Text></Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -306,6 +293,9 @@ const styles = StyleSheet.create({
         height: 40,
        
         borderRadius: 5
+    },
+    postTxt:{
+         fontSize: 16, color: '#4A4A4A' 
     },
     card: {
         borderRadius: 8,

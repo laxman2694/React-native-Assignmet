@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View, ActivityIndicator, StyleSheet,TextInput} from 'react-native';
-import {Item, Input, Button, Toast} from 'native-base';
+import {Item, Input, Button, Toast, Title,Container,Header,Left,Right,Body} from 'native-base';
 import axios from 'axios';
 
 class HomeScreen extends React.Component {
@@ -11,6 +11,7 @@ class HomeScreen extends React.Component {
       dataDetails: null,
       loader: false,
       textInput: '',
+      errorMsg:""
     };
   }
 
@@ -28,12 +29,13 @@ class HomeScreen extends React.Component {
 
   fetchCountryDetails = async data => {
     this.setState({loader: true});
-    try {
+       try {
       let response = await axios.get(
         `https://restcountries.eu/rest/v2/name/${data}`,
       );
 
       if (response.data && response.data.length > 0) {
+       // alert(JSON.stringify(response.data))
         this.props.navigation.navigate('Details', {
           details: response.data,
         });
@@ -59,6 +61,7 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
+    
       <View style={styles.container}>
         <View style={styles.formField}>
          
@@ -92,6 +95,7 @@ class HomeScreen extends React.Component {
         </View>
         {this.state.loader ? this.remderOverLayIndicator() : null}
       </View>
+
     );
   }
 }

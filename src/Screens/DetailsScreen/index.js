@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from 'react-native';
-import {ListItem, Body, Button, Toast, Left} from 'native-base';
+import {ListItem, Body, Thumbnail,Button, Toast, Left} from 'native-base';
 import {SvgUri} from 'react-native-svg';
 import axios from 'axios';
 
@@ -14,10 +14,12 @@ const API_KEY = '05706f22f1fcba77ddaae967ffb18ead';
 
 const CustomListItem = ({item, onpress}) => {
   let {capital, population, latlng, flag, name} = item;
+  alert(flag)
   return (
     <ListItem>
       <Left style={styles.leftContainer}>
         <SvgUri width="100%" height="100%" uri={flag} viewbox="0 0 46 46" />
+        
       </Left>
 
       <Body style={{padding: 10}}>
@@ -61,9 +63,12 @@ class DetailsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      detailsData: this.props.navigation.state.params.Details,
+      detailsData: this.props.navigation.state.params.details,
       loader: false,
     };
+  }
+  componentDidMount(){
+    //alert(JSON.stringify(this.props.navigation.state.params.details))
   }
 
   showIssue = () => {
